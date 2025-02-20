@@ -3,7 +3,7 @@ game("gta5")
 
 name("minimal-hud")
 author("vipex <discord:vipex.v>")
-version("2.3.0")
+version("2.4.0")
 description ("Minimalistic FiveM HUD")
 repository("https://github.com/ThatMadCap/minimal-hud")
 
