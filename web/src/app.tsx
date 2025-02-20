@@ -9,6 +9,7 @@ import { debug, setDebugMode } from "./utils/debug";
 import { fetchNui } from "./utils/fetchNui";
 import { isEnvBrowser } from "./utils/misc";
 import { useCompassLocationStore, useCompassAlwaysStore } from "./states/compass-location";
+import { useSkewedStyleStore, useSkewAmountStore } from "@/states/skewed-style";
 
 if (isEnvBrowser()) {
   const body = document.body;
@@ -23,6 +24,8 @@ export function App() {
   const setMinimapState = useSetMinimapState();
   const [compassLocation, setCompassLocation] = useCompassLocationStore();
   const [compassAlways, setCompassAlways] = useCompassAlwaysStore();
+  const [skewedStyle, setSkewedStyle] = useSkewedStyleStore();
+  const [skewAmount, setSkewAmount] = useSkewAmountStore();
 
   useNuiEvent("state::visibility::app::set", (state) => {
     const newState = state === "toggle" ? !visible : state;
@@ -40,6 +43,8 @@ export function App() {
         setMinimapState(res.minimap);
         setCompassLocation(res.config.compassLocation);
         setCompassAlways(res.config.compassAlways);
+        setSkewedStyle(res.config.useSkewedStyle);
+        setSkewAmount(res.config.skewAmount);
       })
       .catch((err) => {
         console.error(err);

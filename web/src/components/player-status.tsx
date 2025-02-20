@@ -6,10 +6,13 @@ import { BiSolidShieldAlt2 } from "react-icons/bi";
 import { FaGlassWater, FaBurger, FaBrain, FaMicrophone, FaPersonSwimming, FaPersonRunning } from "react-icons/fa6";
 import { TiHeartFullOutline } from "react-icons/ti";
 import { StatBar, StatBarSegmented } from "./ui/status-bars";
+import { useSkewedStyle, useSkewAmount } from "@/states/skewed-style";
 
 const PlayerStatus = () => {
   const [playerState, setPlayerState] = usePlayerStateStore();
   const [minimap, setMinimapState] = useMinimapStateStore();
+  const skewedStyle = useSkewedStyle();
+  const skewedAmount = useSkewAmount();
 
   const handlePlayerStateUpdate = useCallback(
     (newState: PlayerStateInterface) => {
@@ -45,14 +48,12 @@ const PlayerStatus = () => {
       >
         <div
           className="w-full h-full relative"
-          
-          // Uncomment this if you really want that skewed look.
-          // style={{
-          //   transform: "perspective(1000px) rotateY(12deg)",
-          //   backfaceVisibility: "hidden",
-          //   transformStyle: "preserve-3d",
-          //   willChange: "transform",
-          // }}
+          style={skewedStyle ? {
+            transform: `perspective(1000px) rotateY(${skewedAmount}deg)`,
+            backfaceVisibility: "hidden",
+            transformStyle: "preserve-3d",
+            willChange: "transform",
+          } : undefined}
         >
           <div className={"absolute -bottom-12 w-full flex gap-3 items-center justify-start"}>
             <div className={"flex flex-col w-2/4 items-center justify-center gap-1"}>
