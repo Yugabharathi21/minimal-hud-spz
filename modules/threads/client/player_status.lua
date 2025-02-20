@@ -54,9 +54,9 @@ function PlayerStatusThread:start(vehicleStatusThread, seatbeltLogic, framework)
             local headingRanges = {
                 { min = 315, max = 360, dir = "N" },
                 { min = 0, max = 45, dir = "N" },
-                { min = 45, max = 135, dir = "W" },
+                { min = 45, max = 135, dir = "E" },
                 { min = 135, max = 225, dir = "S" },
-                { min = 225, max = 315, dir = "E" },
+                { min = 225, max = 315, dir = "W" },
             }
 
             for _, range in ipairs(headingRanges) do
