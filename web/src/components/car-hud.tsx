@@ -6,7 +6,7 @@ import { debug } from "@/utils/debug";
 import Speedometer from "./ui/speedometer";
 import { TextProgressBar } from "./ui/text-progress-bar";
 import { FaGasPump, FaFireAlt } from 'react-icons/fa';
-import { PiSeatbeltFill, PiEngineFill } from "react-icons/pi";
+import { PiSeatbeltFill, PiEngineFill, PiHeadlightsFill } from "react-icons/pi";
 
 const CarHud = React.memo(function CarHud() {
   const [vehicleState, setVehicleState] = useVehicleStateStore();
@@ -32,6 +32,7 @@ const CarHud = React.memo(function CarHud() {
         <TextProgressBar icon={<FaGasPump />} value={vehicleState.fuel} iconSize="1.1vw" />
         <TextProgressBar icon={<FaFireAlt />} value={vehicleState.nos} />
         <TextProgressBar icon={<PiEngineFill />} value={vehicleState.engineState ? 100 : 0} />
+        <TextProgressBar icon={<PiHeadlightsFill />} value={vehicleState.headlights} />
         <TextProgressBar icon={<PiSeatbeltFill />} value={playerState.isSeatbeltOn ? 100 : 0} iconSize="1.25vw" />
       </>
     );
