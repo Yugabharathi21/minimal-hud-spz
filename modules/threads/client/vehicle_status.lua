@@ -72,6 +72,10 @@ function VehicleStatusThread:start()
             elseif currentGear > 1 then
                 gearString = tostring(math.floor(currentGear - 1))
             end
+            -- Fix for vehicles that only have 1 gear
+            if highGear == 1 then
+                gearString = ""
+            end
 
             -- Handle MPH and KPH
             local speed
