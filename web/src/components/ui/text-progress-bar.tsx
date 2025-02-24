@@ -16,24 +16,25 @@ export const TextProgressBar = ({ value = 50, icon, color = "#06CE6B", iconSize 
   }, [color, value]);
 
   return (
-    <div className={"flex flex-col items-center justify-center w-[2.1dvw] h-[4dvh]"} {...props}>
+    <div className="flex items-center justify-center w-[2.5dvw] h-[3.5dvh] space-x-1">
+      {/* Icon with border */}
       <div
-        className="flex items-center justify-center text-[1vw]"
+        className="flex items-center justify-center text-[1vw] border border-gray-700 rounded-md bg-black/40 p-[0.3vw]"
         style={{
-          height: iconSpacing,
           fontSize: iconSize,
-          marginBottom: iconSpacing,
-          color: 'rgba(255, 255, 255, 0.87)',
+          color: "rgba(255, 255, 255, 0.87)",
         }}
       >
         {icon}
       </div>
-      <div className={"relative w-[80%] bg-black/20 shadow h-[3.5px] 4k:h-[5px] 4k:mt-1 rounded-full drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)]"}>
+
+      {/* Vertical Progress Bar */}
+      <div className="relative w-[3px] h-[2.5dvh] bg-gray-800/60 rounded-full overflow-hidden">
         <div
-          className="absolute max-w-full transition-all rounded-full shadow left-0 h-full z-20"
+          className="absolute bottom-0 w-full transition-all duration-300 rounded-full"
           style={{
-            width: `${value}%`,
-            backgroundColor: getColor,
+            height: `${Math.max(value, 5)}%`, // Ensures visibility even at low values
+            backgroundColor: getColor || "#00ff00", // Default color if undefined
           }}
         ></div>
       </div>

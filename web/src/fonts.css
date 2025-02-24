@@ -53,3 +53,9 @@
     src: url("/fonts/Geist-UltraLight.woff2");
     font-weight: 100;
 }
+
+@font-face {
+    font-family: "jersey-25";
+    src: url("/fonts/Jersey25-Regular.woff2");
+    font-weight: 200;
+}

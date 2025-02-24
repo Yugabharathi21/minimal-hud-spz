@@ -55,18 +55,22 @@ const Speedometer: React.FC<SpeedometerProps> = React.memo(function Speedometer(
   );
 
   return (
-    <div className="w-60 2k:w-[15dvw] 2k:h-[21dvh] 4k:w-[10dvw] 4k:h-[20dvh] h-64 relative flex items-center justify-center -mb-20 z-0">
-      <div className="absolute inset-0 flex items-center justify-center bottom-[-70px]">
-        <div className="text-center flex flex-col">
-          <span className="absolute -mt-5 left-[200px] transform -translate-x-1/2 bottom-[140px] text-[1vw] font-semibold text-gray-400 tabular-nums drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)] ml-1 border border-gray-700 p-1 w-7 h-7 flex items-center justify-center"> {currentGear} </span>
-          <span className="text-[3vw] font-bold text-white tabular-nums drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)] ml-2"> {speed} </span>
-          <span className="absolute text-[19px] right-[5px] bottom-[165px] -mt-1 font-semibold text-gray-400 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)] ml-4 uppercase"> {speedUnit} </span>
-          {engineHealth < 30 && (
-            <div className={"flex items-center justify-center *:drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)] *:size-[0.9vw] *:text-red-600 mt-1"}>
-              <PiEngineFill />
-            </div>
-          )}
-        </div>
+<div className="flex items-center space-x-1 bottom-4 right-4 absolute mr-4 mb-4">
+      {/* Speed Display */}
+      <span className="text-[3vw] font-extrabold text-white tabular-nums drop-shadow-md">
+        {speed}
+      </span>
+
+      <div className="flex flex-col items-start">
+        {/* Speed Unit */}
+        <span className="text-[0.9vw] font-semibold text-gray-400 uppercase leading-none">
+          {speedUnit}
+        </span>
+
+        {/* Gear */}
+        <span className="text-[0.8vw] font-bold text-white border border-gray-700 p-1 w-8 h-8 flex items-center justify-center rounded-md">
+          {currentGear}
+        </span>
       </div>
     </div>
   );
