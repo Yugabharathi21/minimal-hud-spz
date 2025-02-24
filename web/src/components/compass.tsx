@@ -13,13 +13,15 @@ const Compass = () => {
     return null;
   }
   return (
-    <div className={compassLocation === "bottom" ? "flex absolute bottom-1 w-full h-fit items-center justify-center " : "flex w-full h-[10dvh] items-center justify-center"}>
-      <div className={"flex gap-3 items-center justify-center w-[50%]"}>
-        <IconLabelBox label={playerState.heading} Icon={FaCompass} />
-        <IconLabelBox label={playerState.streetLabel} className="min-w-[20%]" Icon={FaLocationDot} />
-        <IconLabelBox className="px-3" label={playerState.areaLabel} Icon={FaMap} />
-      </div>
-    </div>
+<div className={`absolute ${compassLocation === "bottom" ? "bottom-2" : "top-2"} w-full flex items-center justify-center`}>
+  <div className="flex gap-3 items-center justify-center px-5 py-2  border-white/10 w-fit">
+    <IconLabelBox label={playerState.heading} Icon={FaCompass} className="p-2 rounded-[3px] border border-gray-700   text-white shadow-md" />
+    <IconLabelBox label={playerState.streetLabel} Icon={FaLocationDot} className="p-2 rounded-[3px] border border-gray-700  text-white shadow-md" />
+    <IconLabelBox label={playerState.areaLabel} Icon={FaMap} className="p-2 rounded-[3px] border border-gray-700  text-white shadow-md" />
+  </div>
+</div>
+
+
   );
 };
 
