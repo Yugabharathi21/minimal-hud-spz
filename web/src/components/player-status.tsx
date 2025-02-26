@@ -35,6 +35,30 @@ const PlayerStatus = () => {
     return playerState.hunger !== undefined || playerState.thirst !== undefined;
   }, [playerState]);
 
+  // Map status icons to labels for the retro UI
+  const statusLabels = {
+    armor: "ARMOR",
+    health: "HEALTH",
+    mic: "VOICE",
+    hunger: "FOOD",
+    thirst: "WATER",
+    oxygen: "O2",
+    stamina: "STAM",
+    stress: "STRESS"
+  };
+
+  // Custom color palette for the retro theme
+  const retroColors = {
+    armor: "#00AAFF",    // Bright blue
+    health: "#00FFAA",   // Neon green
+    mic: "#FFFF00",      // Bright yellow
+    hunger: "#FF9900",   // Orange
+    thirst: "#00CCFF",   // Cyan
+    oxygen: "#00FFFF",   // Aqua
+    stamina: "#CCFF00",  // Lime
+    stress: "#FF3333"    // Bright red
+  };
+
   return (
     <>
       <div
@@ -55,38 +79,110 @@ const PlayerStatus = () => {
             willChange: "transform",
           } : undefined}
         >
-          <div className={"absolute -bottom-12 w-full flex gap-3 items-center justify-start"}>
-            <div className={"flex flex-col w-2/4 items-center justify-center gap-1"}>
-              <StatBarSegmented Icon={BiSolidShieldAlt2} value={playerState.armor} color="#2B78FC" />
-              <StatBar Icon={TiHeartFullOutline} value={playerState.health} color="#06CE6B" maxValue={100} />
+          {/* Main container with retro background */}
+          <div className="absolute -bottom-14 w-full flex gap-4 items-center justify-start font-mono">
+            {/* Add a decorative border around the whole status UI */}
+            <div className="absolute inset-0 border border-white/30 pointer-events-none opacity-50"></div>
+            
+            {/* Scanlines overlay for the entire UI */}
+            <div className="absolute inset-0 bg-scanlines opacity-20 pointer-events-none"></div>
+            
+            {/* Health & Armor Section */}
+            <div className="flex flex-col w-2/4 items-center justify-center gap-2 p-1 relative">
+              {/* Add corner accents for that retro feel */}
+              <div className="absolute -top-1 -left-1 w-2 h-2 border-t border-l border-white/50"></div>
+              <div className="absolute -top-1 -right-1 w-2 h-2 border-t border-r border-white/50"></div>
+              
+              <StatBarSegmented 
+                Icon={BiSolidShieldAlt2} 
+                value={playerState.armor} 
+                color={retroColors.armor} 
+                label={statusLabels.armor}
+              />
+              <StatBar 
+                Icon={TiHeartFullOutline} 
+                value={playerState.health} 
+                color={retroColors.health} 
+                maxValue={100} 
+                label={statusLabels.health}
+              />
             </div>
+            
+            {/* Status Icons Section */}
             {isUsingFramework && (
-              <>
-                <div className="w-2/4 flex gap-3">
-                  {typeof playerState.mic === "boolean" && playerState.mic === true ? <StatBar Icon={FaMicrophone} value={playerState.mic ? 100 : 0} color="#FFFF00" vertical /> : typeof playerState.voice === "number" ? <StatBar Icon={FaMicrophone} value={playerState.voice} color="#ffffff" vertical /> : null}
+              <div className="w-2/4 flex gap-3 p-1 relative">
+                {/* Add corner accents for that retro feel */}
+                <div className="absolute -top-1 -left-1 w-2 h-2 border-t border-l border-white/50"></div>
+                <div className="absolute -bottom-1 -right-1 w-2 h-2 border-b border-r border-white/50"></div>
+                
+                {typeof playerState.mic === "boolean" && playerState.mic === true ? (
+                  <StatBar 
+                    Icon={FaMicrophone} 
+                    value={playerState.mic ? 100 : 0} 
+                    color={retroColors.mic} 
+                    vertical 
+                    label={statusLabels.mic}
+                  />
+                ) : typeof playerState.voice === "number" ? (
+                  <StatBar 
+                    Icon={FaMicrophone} 
+                    value={playerState.voice} 
+                    color={retroColors.mic} 
+                    vertical 
+                    label={statusLabels.mic}
+                  />
+                ) : null}
 
-                  <StatBar Icon={FaBurger} value={playerState.hunger} color="#FB8607" vertical />
-                  <StatBar Icon={FaGlassWater} value={playerState.thirst} color="#2B78FC" vertical />
-                  {playerState.oxygen < 100 && (
+                <StatBar 
+                  Icon={FaBurger} 
+                  value={playerState.hunger} 
+                  color={retroColors.hunger} 
+                  vertical 
+                  label={statusLabels.hunger}
+                />
+                
+                <StatBar 
+                  Icon={FaGlassWater} 
+                  value={playerState.thirst} 
+                  color={retroColors.thirst} 
+                  vertical 
+                  label={statusLabels.thirst}
+                />
+                
+                {playerState.oxygen < 100 && (
                   <StatBar
                     Icon={FaPersonSwimming}
                     value={playerState.oxygen}
-                    color="#00d4ff"
+                    color={retroColors.oxygen}
                     vertical
+                    label={statusLabels.oxygen}
                   />
                 )}
+                
                 {playerState.stamina < 100 && (
                   <StatBar
                     Icon={FaPersonRunning}
                     value={playerState.stamina}
-                    color="#63e6be"
+                    color={retroColors.stamina}
                     vertical
+                    label={statusLabels.stamina}
                   />
                 )}
-                  {typeof playerState.stress === "number" && playerState.stress > 0 && <StatBar Icon={FaBrain} value={playerState.stress} color="#FE2436" vertical />}
-                </div>
-              </>
+                
+                {typeof playerState.stress === "number" && playerState.stress > 0 && (
+                  <StatBar 
+                    Icon={FaBrain} 
+                    value={playerState.stress} 
+                    color={retroColors.stress} 
+                    vertical 
+                    label={statusLabels.stress}
+                  />
+                )}
+              </div>
             )}
+            
+            {/* Add a pixel grid overlay for the entire UI */}
+            <div className="absolute inset-0 bg-grid-pattern opacity-20 mix-blend-overlay pointer-events-none"></div>
           </div>
         </div>
       </div>

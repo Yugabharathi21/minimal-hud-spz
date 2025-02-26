@@ -9,6 +9,9 @@ export default {
     ],
     theme: {
         extend: {
+            dropShadow: {
+                'glow': '0 0 3px rgba(0, 255, 170, 0.7)',
+            },
             textShadow: {
                 sm: "0 1px 2px var(--tw-shadow-color)",
                 DEFAULT: "0 2px 4px var(--tw-shadow-color)",
@@ -69,5 +72,19 @@ export default {
             },
         },
     },
-    plugins: [],
+    plugins: [
+        function({ addUtilities }) {
+            const newUtilities = {
+                '.bg-scanlines': {
+                    backgroundImage: 'linear-gradient(transparent 50%, rgba(0, 0, 0, 0.5) 50%)',
+                    backgroundSize: '100% 4px',
+                },
+                '.bg-grid-pattern': {
+                    backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px)',
+                    backgroundSize: '4px 4px',
+                },
+            }
+            addUtilities(newUtilities)
+        },
+    ],
 };

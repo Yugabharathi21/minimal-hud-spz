@@ -8,36 +8,63 @@ interface StatBarProps extends React.HTMLAttributes<HTMLDivElement> {
   color?: string;
   vertical?: boolean;
   iconColor?: string;
+  label?: string;
 }
 
-export const StatBar = ({ Icon = TiHeartFullOutline, value = 20, maxValue = 100, color = "#F2F2F2", vertical = false,  iconColor, ...props }: StatBarProps) => {
+export const StatBar = ({ 
+  Icon = TiHeartFullOutline, 
+  value = 20, 
+  maxValue = 100, 
+  color = "#00FFAA", 
+  vertical = false,
+  iconColor,
+  label,
+  ...props 
+}: StatBarProps) => {
   const percentage = useMemo(() => (value / maxValue) * 100, [value, maxValue]);
-  const finalIconColor = value === 0 ? "text-red-500" : iconColor || "text-y_white";
+  const finalIconColor = value === 0 ? "text-red-500" : iconColor || "text-white";
+  
   return (
-    <div className={`flex ${vertical ? "h-[3dvh]" : "w-full"} items-center gap-1 4k:gap-2`} {...props}>
-      {!vertical && <Icon className="${finalIconColor} text-[1vw] " />}
+    <div className={`flex ${vertical ? "h-[3dvh]" : "w-full"} items-center gap-2 font-mono`} {...props}>
+      {!vertical && <Icon className={`${finalIconColor} text-[1.2vw] filter drop-shadow-glow`} />}
+      
       {!vertical && (
-        <p
-          className="text-[0.6vw] drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)] w-[20px] 4k:text-base 2k:text-sm text-center font-bold"
-          style={{
-            color: color,
-          }}
-        >
-          {value}
-        </p>
+        <div className="flex flex-col">
+          {label && (
+            <p className="text-[0.7vw] font-bold uppercase tracking-wider text-white drop-shadow-glow">
+              {label}
+            </p>
+          )}
+          <p
+            className="text-[0.8vw] drop-shadow-glow w-[30px] font-bold"
+            style={{
+              color: color,
+            }}
+          >
+            {value}
+          </p>
+        </div>
       )}
-      <div className={`relative drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)] ${vertical ? "h-full 2k:w-[6px] w-[4px] 4k:w-[8px] rounded-full" : "w-full ml-1 h-2 2k:h-3"} bg-black/30  rounded-[1px] overflow-hidden`}>
+      
+      <div className={`relative ${vertical ? "h-full 2k:w-[6px] w-[4px] 4k:w-[8px] rounded-none" : "w-full ml-1 h-3 2k:h-4"} bg-black/70 border border-white/30 rounded-none overflow-hidden`}>
+        {/* Background scanlines effect */}
+        <div className="absolute inset-0 bg-scanlines opacity-20 z-10"></div>
+        
+        {/* Progress bar with pixelated edges */}
         <div
-          className={`absolute ${vertical ? "bottom-0 w-full" : "left-0 h-full"} transition-all bg-red-500 rounded-[1px] ease-in-out`}
+          className={`absolute ${vertical ? "bottom-0 w-full" : "left-0 h-full"} transition-all ease-in-out`}
           style={{
             backgroundColor: color,
             [vertical ? "height" : "width"]: `${percentage}%`,
-            borderRadius: percentage < 100 ? "50px" : "9999px",
-            overflow: "hidden",
+            boxShadow: `0 0 8px ${color}`,
           }}
         />
+        
+        {/* Pixel overlay pattern */}
+        <div className={`absolute inset-0 bg-grid-pattern opacity-30 mix-blend-overlay z-20`}></div>
       </div>
-      {vertical && <Icon className="${finalIconColor} drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)] text-[0.8vw]" />}
+      
+      {vertical && <Icon className={`${finalIconColor} drop-shadow-glow text-[1vw]`} />}
     </div>
   );
 };
@@ -46,9 +73,16 @@ interface StatBarSegmentedProps extends React.HTMLAttributes<HTMLDivElement> {
   Icon?: React.ComponentType<{ className?: string }>;
   value?: number;
   color?: string;
+  label?: string;
 }
 
-export const StatBarSegmented = ({ Icon = TiHeartFullOutline, value = 20, color = "#F2F2F2", ...props }: StatBarSegmentedProps) => {
+export const StatBarSegmented = ({ 
+  Icon = TiHeartFullOutline, 
+  value = 20, 
+  color = "#00FFAA",
+  label,
+  ...props 
+}: StatBarSegmentedProps) => {
   const segments = 4;
   const segmentWidth = 100 / segments;
 
@@ -68,17 +102,45 @@ export const StatBarSegmented = ({ Icon = TiHeartFullOutline, value = 20, color 
   );
 
   return (
-    <div className="flex items-center gap-1 w-full 4k:gap-2" {...props}>
-      <Icon className="text-y_white text-[1vw] drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)]" />
-      <p className="text-[0.6vw] w-[20px] text-center drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)] font-bold" style={{ color: color }}>
-        {value}
-      </p>
-      <div className="relative flex gap-3 *:drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)] w-full ml-1 h-[8px] 2k:h-3 rounded-[1px]">
+    <div className="flex items-center gap-2 w-full font-mono" {...props}>
+      <Icon className="text-white text-[1.2vw] filter drop-shadow-glow" />
+      
+      <div className="flex flex-col">
+        {label && (
+          <p className="text-[0.7vw] font-bold uppercase tracking-wider text-white drop-shadow-glow mb-1">
+            {label}
+          </p>
+        )}
+        <p className="text-[0.8vw] w-[30px] font-bold drop-shadow-glow" style={{ color }}>
+          {value}
+        </p>
+      </div>
+      
+      <div className="relative flex gap-1 w-full h-3 2k:h-4 ml-1">
         {segmentFills.map((fill, index) => (
-          <svg key={index} width="100%" height="100%" className={"rounded-full "} viewBox="0 0 100 24" preserveAspectRatio="none">
-            <rect x="0" y="0" width="100" height="24" className={"fill-black/30"} />
-            <rect x="0" y="0" width={fill} height="24" fill={color} className={"transition-all"} />
-          </svg>
+          <div 
+            key={index} 
+            className="relative h-full w-full border border-white/30 overflow-hidden"
+          >
+            {/* Background */}
+            <div className="absolute inset-0 bg-black/70"></div>
+            
+            {/* Scanlines effect */}
+            <div className="absolute inset-0 bg-scanlines opacity-20 z-10"></div>
+            
+            {/* Fill */}
+            <div 
+              className="absolute left-0 h-full transition-all ease-in-out" 
+              style={{
+                width: `${fill}%`,
+                backgroundColor: color,
+                boxShadow: `0 0 8px ${color}`,
+              }}
+            />
+            
+            {/* Pixel grid overlay */}
+            <div className="absolute inset-0 bg-grid-pattern opacity-30 mix-blend-overlay z-20"></div>
+          </div>
         ))}
       </div>
     </div>
