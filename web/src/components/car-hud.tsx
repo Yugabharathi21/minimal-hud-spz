@@ -49,27 +49,27 @@ const CarHud = React.memo(function CarHud() {
 
     return (
       <div
-        className={"absolute bottom-8 right-16 w-fit h-fit mb-4 flex-col items-center flex justify-center gap-2"}
-        style={skewedStyle ? {
-          transform: `perspective(1000px) rotateY(-${skewedAmount}deg)`,
-          backfaceVisibility: "hidden",
-          transformStyle: "preserve-3d",
-          willChange: "transform",
-        } : undefined}
-      >
-        <Speedometer
-          speed={vehicleState.speed}
-          maxRpm={100}
-          rpm={vehicleState.rpm}
-          gears={vehicleState.gears}
-          currentGear={vehicleState.currentGear}
-          engineHealth={vehicleState.engineHealth}
-          speedUnit={vehicleState.speedUnit}
-        />
-        <div className={"flex gap-2 items-center 4k:-mt-14 mt-2.5 ml-2"}>
-          {renderProgressBars()}
-        </div>
+      className="absolute bottom-12 space-y-[220px] right-16 w-fit h-[200px] mb-4 flex-col items-center flex justify-center gap-4"
+      style={skewedStyle ? {
+        transform: `perspective(1000px) rotateY(-${skewedAmount}deg)`,
+        backfaceVisibility: "hidden",
+        transformStyle: "preserve-3d",
+        willChange: "transform",
+      } : undefined}
+    >
+      <Speedometer
+        speed={vehicleState.speed}
+        maxRpm={100}
+        rpm={vehicleState.rpm}
+        gears={vehicleState.gears}
+        currentGear={vehicleState.currentGear}
+        engineHealth={vehicleState.engineHealth}
+        speedUnit={vehicleState.speedUnit}
+      />
+      <div className="flex gap-2 items-center 4k:-mt-10 mt-2.5 ml-2">
+        {renderProgressBars()}
       </div>
+    </div>
     );
   }, [playerState.isInVehicle, vehicleState, playerState.isSeatbeltOn, skewedStyle]);
 
