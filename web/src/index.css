@@ -39,3 +39,25 @@ body {
     @apply border-border;
   }
 }
+
+@keyframes speedPulse {
+  0%, 100% { 
+    filter: brightness(1);
+    transform: scale(1);
+  }
+  50% { 
+    filter: brightness(1.2);
+    transform: scale(1.02);
+  }
+}
+
+@keyframes rpmPulse {
+  0%, 100% { 
+    opacity: 0.9;
+    transform: scaleY(1);
+  }
+  50% { 
+    opacity: 1;
+    transform: scaleY(1.2);
+  }
+}
